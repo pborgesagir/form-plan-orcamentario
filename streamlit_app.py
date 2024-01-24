@@ -7,19 +7,30 @@ st.title("Formulário para Planejamento Orçamentário")
 
 # Constants
 BUSINESS_TYPES = [
-    "Manufacturer",
-    "Distributor",
-    "Wholesaler",
-    "Retailer",
-    "Service Provider",
+    "CRER",
+    "HDS",
+    "HECAD",
+    "HUGOL",
 ]
-CLASSIFICAÇÃO = [
-    "Electronics",
-    "Apparel",
-    "Groceries",
-    "Software",
-    "Other",
+CLASSIFICACAO = [
+    "Água",
+    "Central de gases",
+    "Climatização artificial e aquecimento solar",
+    "Contrato engenharia clínica",
+    "Contrato manutenção predial",
+    "Contrato projetos",
+    "Elevadores",
+    "Energia elétrica",
+    "Grupo gerador",
+    "Inspeções e qualificações",
+    "Locação de equipamentos",
+    "Manutenção equipamentos de imagem",
+    "Manutenção pontual fora orçamento",
+    "Manutenções diversas",
+    "Nobreaks",
+    "Outros",
 ]
+
 
 # Establishing a Google Sheets connection
 conn = st.experimental_connection("gsheets", type=GSheetsConnection)
