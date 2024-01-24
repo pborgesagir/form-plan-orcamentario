@@ -81,14 +81,14 @@ if action == "Entrada de Custo":
         meses = st.selectbox(
             "Mês*", options=MESES_DO_ANO, index=None
         )
-        valor = st.text_input(label="Valor do custo*")
+        custo = st.text_input(label="Valor do custo*")
         observacao = st.text_area(label="Observações")
 
         st.markdown("**Campo obrigatório*")
         submit_button = st.form_submit_button(label="Enviar Custo")
 
         if submit_button:
-            if not unidade or not descricao or not classificacao or not meses or not valor:
+            if not unidade or not descricao or not classificacao or not meses or not custo:
                 st.warning("Verifique se todos os campos obrigatórios foram preenchidos.")
             elif existing_data["UNIDADE"].str.contains(unidade).any():
                 st.warning("Um custo com essa descrição para este mês já existe.")
@@ -100,6 +100,7 @@ if action == "Entrada de Custo":
                             "DESCRIÇÃO": descricao,
                             "CLASSIFICAÇÃO": classificacao,
                             "MÊS": meses,
+                            "CUSTO": custo,
                             "OBSERVAÇÃO": observacao,
                         }
                     ]
