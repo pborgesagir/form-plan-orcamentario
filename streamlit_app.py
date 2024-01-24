@@ -90,7 +90,7 @@ if action == "Entrada de Custo":
         if submit_button:
             if not unidade or not descricao or not classificacao or not meses or not custo:
                 st.warning("Verifique se todos os campos obrigatórios foram preenchidos.")
-            elif existing_data["UNIDADE"].str.contains(unidade).any():
+            elif existing_data["UNIDADE"].astype(str).str.contains(unidade).any():
                 st.warning("Um custo com essa descrição para este mês já existe.")
             else:
                 vendor_data = pd.DataFrame(
@@ -108,6 +108,7 @@ if action == "Entrada de Custo":
                 updated_df = pd.concat([existing_data, vendor_data], ignore_index=True)
                 conn.update(worksheet="Vendors", data=updated_df)
                 st.success("Custo enviado com sucesso!")
+
 
 elif action == "Editar Custo":
     st.markdown("Select a vendor and update their details.")
