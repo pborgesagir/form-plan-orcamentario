@@ -116,7 +116,9 @@ elif action == "Editar Custo":
     vendor_to_update = st.selectbox(
         "Selecione um custo para editar", options=existing_data["ID"].tolist()
     )
-    vendor_data = existing_data[existing_data["ID"] == vendor_to_update].iloc[0]
+    vendor_data = existing_data[existing_data["ID"] == vendor_to_update].iloc[
+        0
+    ]
 
     with st.form(key="update_form"):
         unidade = st.selectbox(
@@ -129,13 +131,13 @@ elif action == "Editar Custo":
         )
         classificacao = st.multiselect(
             "Classificação*",
-            options=CLASSIFICACAO_QUAL,
-            default=[vendor_data["CLASSIFICAÇÃO"]]
+            options=CLASSIFICAÇÃO,
+            index=CLASSIFICACAO_QUAL.index(vendor_data["CLASSIFICAÇÃO"])
         )
         meses = st.multiselect(
             "Mês*",
             options=MESES_DO_ANO,
-            default=[vendor_data["MÊS"]]
+            index=MESES_DO_ANO.index(vendor_data["MÊS"])
         )
         custo = st.text_input(
             label="Custo*", value=vendor_data["CUSTO"]
@@ -148,8 +150,8 @@ elif action == "Editar Custo":
         update_button = st.form_submit_button(label="Atualizar entrada de custo")
 
         if update_button:
-            if not unidade or not descricao or not classificacao or not meses or not custo:
-                st.warning("Preencha todos os campos obrigatórios.")
+            if not not unidade or not descricao or not classificacao or not meses or not custo:
+                st.warning("Preencha todos os campos obrigatório.")
             else:
                 # Removing old entry
                 existing_data.drop(
@@ -164,8 +166,8 @@ elif action == "Editar Custo":
                         {
                             "UNIDADE": unidade,
                             "DESCRIÇÃO": descricao,
-                            "CLASSIFICAÇÃO": classificacao[0] if classificacao else None,
-                            "MÊS": meses[0] if meses else None,
+                            "CLASSIFICAÇÃO": classificacao,
+                            "MÊS": meses,
                             "CUSTO": custo,
                             "OBSERVAÇÃO": observacao,
                         }
