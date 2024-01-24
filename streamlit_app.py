@@ -134,7 +134,7 @@ elif action == "Editar Custo":
             options=CLASSIFICACAO_QUAL,
             index=CLASSIFICACAO_QUAL.index(vendor_data["CLASSIFICAÇÃO"])
         )
-        meses = st.multiselect(
+        meses = st.selectbox(
             "Mês*",
             options=MESES_DO_ANO,
             index=MESES_DO_ANO.index(vendor_data["MÊS"])
