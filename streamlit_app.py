@@ -55,7 +55,7 @@ MESES_DO_ANO = [
 conn = st.connection("gsheets", type=GSheetsConnection)
 
 # Fetch existing vendors data
-existing_data = conn.read(worksheet="Vendors", usecols=list(range(7)), ttl=6)
+existing_data = conn.read(worksheet="Vendors", usecols=list(range(6)), ttl=5)
 existing_data = existing_data.dropna(how="all")
 
 action = st.selectbox(
@@ -110,6 +110,7 @@ if action == "Entrada de Custo":
                 st.success("Custo enviado com sucesso!")
 
 
+# ...
 elif action == "Editar Custo":
     st.markdown("Selecione um custo e edite o que for necessário.")
 
@@ -134,11 +135,22 @@ elif action == "Editar Custo":
             options=CLASSIFICACAO_QUAL,
             index=CLASSIFICACAO_QUAL.index(vendor_data["CLASSIFICAÇÃO"])
         )
-        meses = st.selectbox(
-            "Mês*",
-            options=MESES_DO_ANO,
-            index=MESES_DO_ANO.index(vendor_data["MÊS"])
-        )
+
+        # Convert the value to a string and handle cases where it's not present in the list
+        mes_value = str(vendor_data["MÊS"])
+        try:
+            meses = st.selectbox(
+                "Mês*",
+                options=MESES_DO_ANO,
+                index=MESES_DO_ANO.index(mes_value)
+            )
+        except ValueError:
+            meses = st.selectbox(
+                "Mês*",
+                options=MESES_DO_ANO,
+                index=None  # Default to None if the value is not found in the list
+            )
+
         custo = st.text_input(
             label="Custo*", value=vendor_data["CUSTO"]
         )
@@ -150,8 +162,8 @@ elif action == "Editar Custo":
         update_button = st.form_submit_button(label="Atualizar entrada de custo")
 
         if update_button:
-            if not not unidade or not descricao or not classificacao or not meses or not custo:
-                st.warning("Preencha todos os campos obrigatório.")
+            if not unidade or not descricao or not classificacao or not meses or not custo:
+                st.warning("Preencha todos os campos obrigatórios.")
             else:
                 # Removing old entry
                 existing_data.drop(
@@ -179,6 +191,7 @@ elif action == "Editar Custo":
                 )
                 conn.update(worksheet="Vendors", data=updated_df)
                 st.success("Vendor details successfully updated!")
+
 
 
 # Ver tabela de Custo
