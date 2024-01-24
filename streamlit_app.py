@@ -29,7 +29,7 @@ existing_data = conn.read(worksheet="Vendors", usecols=list(range(6)), ttl=5)
 existing_data = existing_data.dropna(how="all")
 
 action = st.selectbox(
-    "Choose an Action",
+    "Escolha uma Ação",
     [
         "Entrada de Custo",
         "Editar Custo",
