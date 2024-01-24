@@ -117,7 +117,7 @@ elif action == "Editar Custo":
         "Selecione um custo para editar", options=existing_data["ID"].tolist()
     )
     vendor_data = existing_data[existing_data["ID"] == vendor_to_update].iloc[
-        1
+        0
     ]
 
     with st.form(key="update_form"):
