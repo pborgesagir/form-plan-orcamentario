@@ -32,6 +32,23 @@ CLASSIFICACAO_QUAL = [
     "Nobreaks",
     "Outros",
 ]
+MESES_DO_ANO = [
+    "JANEIRO",
+    "FEVEREIRO",
+    "MARÇO",
+    "ABRIL",
+    "MAIO",
+    "JUNHO",
+    "JULHO",
+    "AGOSTO",
+    "SETEMBRO",
+    "OUTUBRO",
+    "NOVEMBRO",
+    "DEZEMBRO",
+]
+
+
+
 
 
 # Establishing a Google Sheets connection
@@ -61,25 +78,17 @@ if action == "Entrada de Custo":
         classificacao = st.selectbox(
             "Classificação*", options=CLASSIFICACAO_QUAL, index=None
         )
-        janeiro = st.text_input(label="Janeiro")
-        fevereiro = st.text_input(label="Fevereiro")
-        marco = st.text_input(label="Março")
-        abril = st.text_input(label="Abril")
-        maio = st.text_input(label="Maio")
-        junho = st.text_input(label="Junho")
-        julho = st.text_input(label="Julho")
-        agosto = st.text_input(label="Agosto")
-        setembro = st.text_input(label="Setembro")
-        outubro = st.text_input(label="Outubro")
-        novembro = st.text_input(label="Novembro")
-        dezembro = st.text_input(label="Dezembro")
+        meses = st.selectbox(
+            "Mês*", options=MESES_DO_ANO, index=None
+        )
+        valor = st.text_area(label="Valor do custo")
         observacao = st.text_area(label="Observações")
 
         st.markdown("**Campo obrigatório*")
         submit_button = st.form_submit_button(label="Enviar Custo")
 
         if submit_button:
-            if not unidade or not descricao or not classificacao:
+            if not unidade or not descricao or not classificacao or not meses or not valor:
                 st.warning("Verifique se todos os campos obrigatórios foram preenchidos.")
             elif existing_data["UNIDADE"].str.contains(unidade).any():
                 st.warning("Um custo com essa descrição para este mês já existe.")
@@ -90,18 +99,7 @@ if action == "Entrada de Custo":
                             "UNIDADE": unidade,
                             "DESCRIÇÃO": descricao,
                             "CLASSIFICAÇÃO": classificacao,
-                            "JANEIRO": "janeiro",
-                            "FEVEREIRO": "fevereiro",
-                            "MARÇO": "março",
-                            "ABRIL": "abril",
-                            "MAIO": "maio",
-                            "JUNHO": "junho",
-                            "JULHO": "julho",
-                            "AGOSTO": "agosto",
-                            "SETEMBRO": "setembro",
-                            "OUTUBRO": "outubro",
-                            "NOVEMBRO": "novembro",
-                            "DEZEMBRO": "dezembro",
+                            "MÊS": meses,
                             "OBSERVAÇÃO": observacao,
                         }
                     ]
