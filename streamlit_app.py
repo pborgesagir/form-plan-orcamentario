@@ -34,7 +34,7 @@ action = st.selectbox(
         "Entrada de Custo",
         "Editar Custo",
         "Ver tabela de Custo",
-        "Delete Vendor",
+        "Deletar Custo",
     ],
 )
 
@@ -147,8 +147,8 @@ elif action == "Editar Custo":
 elif action == "Ver tabela de Custo":
     st.dataframe(existing_data)
 
-# Delete Vendor
-elif action == "Delete Vendor":
+# Deletar Custo
+elif action == "Deletar Custo":
     vendor_to_delete = st.selectbox(
         "Select a Vendor to Delete", options=existing_data["CompanyName"].tolist()
     )
