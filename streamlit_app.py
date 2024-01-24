@@ -131,7 +131,7 @@ elif action == "Editar Custo":
         )
         classificacao = st.multiselect(
             "Classificação*",
-            options=CLASSIFICAÇÃO,
+            options=CLASSIFICACAO_QUAL,
             index=CLASSIFICACAO_QUAL.index(vendor_data["CLASSIFICAÇÃO"])
         )
         meses = st.multiselect(
