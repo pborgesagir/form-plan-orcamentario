@@ -1,6 +1,8 @@
 import streamlit as st
 from streamlit_gsheets import GSheetsConnection
 import pandas as pd
+from streamlit import text_input
+
 
 # Display Title and Description
 st.title("Formulário para Planejamento Orçamentário")
@@ -71,7 +73,7 @@ if action == "Entrada de Custo":
         outubro = st.text_input(label="Outubro")
         novembro = st.text_input(label="Novembro")
         dezembro = st.text_input(label="Dezembro")
-        observacao = st.text_area(label="Additional Notes")
+        observacao = st.text_area(label="Observações")
 
         st.markdown("**Campo obrigatório*")
         submit_button = st.form_submit_button(label="Enviar Custo")
