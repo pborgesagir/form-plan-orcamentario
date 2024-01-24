@@ -129,7 +129,7 @@ elif action == "Editar Custo":
         descricao = st.text_input(
             label="Descrição*", value=vendor_data["DESCRIÇÃO"]
         )
-        classificacao = st.multiselect(
+        classificacao = st.selectbox(
             "Classificação*",
             options=CLASSIFICACAO_QUAL,
             index=CLASSIFICACAO_QUAL.index(vendor_data["CLASSIFICAÇÃO"])
