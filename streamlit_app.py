@@ -81,7 +81,7 @@ if action == "Entrada de Custo":
         meses = st.selectbox(
             "Mês*", options=MESES_DO_ANO, index=None
         )
-        valor = st.text_imput(label="Valor do custo*")
+        valor = st.text_input(label="Valor do custo*")
         observacao = st.text_area(label="Observações")
 
         st.markdown("**Campo obrigatório*")
