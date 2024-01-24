@@ -111,50 +111,52 @@ if action == "Entrada de Custo":
 
 
 elif action == "Editar Custo":
-    st.markdown("Select a vendor and update their details.")
+    st.markdown("Selecione um custo e edite o que for necessário.")
 
     vendor_to_update = st.selectbox(
-        "Select a Vendor to Update", options=existing_data["UNIDADE"].tolist()
+        "Selecione um custo para editar", options=existing_data["ID"].tolist()
     )
-    vendor_data = existing_data[existing_data["UNIDADE"] == vendor_to_update].iloc[
+    vendor_data = existing_data[existing_data["ID"] == vendor_to_update].iloc[
         0
     ]
 
     with st.form(key="update_form"):
-        unidade = st.text_input(
-            label="Company Name*", value=vendor_data["UNIDADE"]
-        )
-        descricao = st.selectbox(
-            "Business Type*",
+        unidade = st.selectbox(
+            "Unidade*",
             options=UNIDADE_QUAL,
-            index=UNIDADE_QUAL.index(vendor_data["DESCRIÇÃO"]),
+            index=UNIDADE_QUAL.index(vendor_data["UNIDADE"])
         )
-        CLASSIFICAÇÃO = st.multiselect(
-            "CLASSIFICAÇÃO Offered",
+        descricao = st.text_input(
+            label="Descrição*", value=vendor_data["DESCRIÇÃO"]
+        )
+        classificacao = st.multiselect(
+            "Classificação*",
             options=CLASSIFICAÇÃO,
-            default=vendor_data["CLASSIFICAÇÃO"].split(", "),
+            index=CLASSIFICACAO_QUAL.index(vendor_data["CLASSIFICAÇÃO"])
         )
-        years_in_business = st.slider(
-            "Years in Business", 0, 50, int(vendor_data["JANEIRO"])
+        meses = st.multiselect(
+            "Mês*",
+            options=MESES_DO_ANO,
+            index=MESES_DO_ANO.index(vendor_data["MÊS"])
         )
-        onboarding_date = st.date_input(
-            label="Onboarding Date", value=pd.to_datetime(vendor_data["FEVEREIRO"])
+        custo = st.text_input(
+            label="Custo*", value=vendor_data["CUSTO"]
         )
         observacao = st.text_area(
-            label="Additional Notes", value=vendor_data["OBSERVAÇÃO"]
+            label="Observação", value=vendor_data["OBSERVAÇÃO"]
         )
 
         st.markdown("**required*")
-        update_button = st.form_submit_button(label="Update Vendor Details")
+        update_button = st.form_submit_button(label="Atualizar entrada de custo")
 
         if update_button:
-            if not unidade or not descricao:
-                st.warning("Ensure all mandatory fields are filled.")
+            if not not unidade or not descricao or not classificacao or not meses or not custo:
+                st.warning("Preencha todos os campos obrigatório.")
             else:
                 # Removing old entry
                 existing_data.drop(
                     existing_data[
-                        existing_data["UNIDADE"] == vendor_to_update
+                        existing_data["ID"] == vendor_to_update
                     ].index,
                     inplace=True,
                 )
@@ -164,9 +166,9 @@ elif action == "Editar Custo":
                         {
                             "UNIDADE": unidade,
                             "DESCRIÇÃO": descricao,
-                            "CLASSIFICAÇÃO": ", ".join(CLASSIFICAÇÃO),
-                            "JANEIRO": years_in_business,
-                            "FEVEREIRO": onboarding_date.strftime("%Y-%m-%d"),
+                            "CLASSIFICAÇÃO": classificacao,
+                            "MÊS": meses,
+                            "CUSTO": custo,
                             "OBSERVAÇÃO": observacao,
                         }
                     ]
@@ -185,14 +187,14 @@ elif action == "Ver tabela de Custo":
 # Deletar Custo
 elif action == "Deletar Custo":
     vendor_to_delete = st.selectbox(
-        "Select a Vendor to Delete", options=existing_data["UNIDADE"].tolist()
+        "Selecione um custo para deletar", options=existing_data["ID"].tolist()
     )
 
     if st.button("Delete"):
         existing_data.drop(
-            existing_data[existing_data["UNIDADE"] == vendor_to_delete].index,
+            existing_data[existing_data["ID"] == vendor_to_delete].index,
             inplace=True,
         )
         conn.update(worksheet="Vendors", data=existing_data)
-        st.success("Vendor successfully deleted!")
+        st.success("Custo deletado com sucesso!")
 
