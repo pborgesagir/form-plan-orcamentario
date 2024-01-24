@@ -3,7 +3,7 @@ from streamlit_gsheets import GSheetsConnection
 import pandas as pd
 
 # Display Title and Description
-st.title("Vendor Management Portal")
+st.title("Formulário para Planejamento Orçamentário")
 
 # Constants
 BUSINESS_TYPES = [
