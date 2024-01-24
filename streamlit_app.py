@@ -13,7 +13,7 @@ BUSINESS_TYPES = [
     "Retailer",
     "Service Provider",
 ]
-PRODUCTS = [
+CLASSIFICAÇÃO = [
     "Electronics",
     "Apparel",
     "Groceries",
@@ -25,7 +25,7 @@ PRODUCTS = [
 conn = st.experimental_connection("gsheets", type=GSheetsConnection)
 
 # Fetch existing vendors data
-existing_data = conn.read(worksheet="Vendors", usecols=list(range(6)), ttl=5)
+existing_data = conn.read(worksheet="Vendors", usecols=list(range(16)), ttl=15)
 existing_data = existing_data.dropna(how="all")
 
 action = st.selectbox(
@@ -45,7 +45,7 @@ if action == "Entrada de Custo":
         business_type = st.selectbox(
             "Business Type*", options=BUSINESS_TYPES, index=None
         )
-        products = st.multiselect("Products Offered", options=PRODUCTS)
+        CLASSIFICAÇÃO = st.multiselect("CLASSIFICAÇÃO Offered", options=CLASSIFICAÇÃO)
         years_in_business = st.slider("Years in Business", 0, 50, 5)
         onboarding_date = st.date_input(label="Onboarding Date")
         additional_info = st.text_area(label="Additional Notes")
@@ -56,18 +56,18 @@ if action == "Entrada de Custo":
         if submit_button:
             if not company_name or not business_type:
                 st.warning("Ensure all mandatory fields are filled.")
-            elif existing_data["CompanyName"].str.contains(company_name).any():
+            elif existing_data["UNIDADE"].str.contains(company_name).any():
                 st.warning("A vendor with this company name already exists.")
             else:
                 vendor_data = pd.DataFrame(
                     [
                         {
-                            "CompanyName": company_name,
-                            "BusinessType": business_type,
-                            "Products": ", ".join(products),
-                            "YearsInBusiness": years_in_business,
-                            "OnboardingDate": onboarding_date.strftime("%Y-%m-%d"),
-                            "AdditionalInfo": additional_info,
+                            "UNIDADE": company_name,
+                            "DESCRIÇÃO": business_type,
+                            "CLASSIFICAÇÃO": ", ".join(CLASSIFICAÇÃO),
+                            "JANEIRO": years_in_business,
+                            "FEVEREIRO": onboarding_date.strftime("%Y-%m-%d"),
+                            "OBSERVAÇÃO": additional_info,
                         }
                     ]
                 )
@@ -79,34 +79,34 @@ elif action == "Editar Custo":
     st.markdown("Select a vendor and update their details.")
 
     vendor_to_update = st.selectbox(
-        "Select a Vendor to Update", options=existing_data["CompanyName"].tolist()
+        "Select a Vendor to Update", options=existing_data["UNIDADE"].tolist()
     )
-    vendor_data = existing_data[existing_data["CompanyName"] == vendor_to_update].iloc[
+    vendor_data = existing_data[existing_data["UNIDADE"] == vendor_to_update].iloc[
         0
     ]
 
     with st.form(key="update_form"):
         company_name = st.text_input(
-            label="Company Name*", value=vendor_data["CompanyName"]
+            label="Company Name*", value=vendor_data["UNIDADE"]
         )
         business_type = st.selectbox(
             "Business Type*",
             options=BUSINESS_TYPES,
-            index=BUSINESS_TYPES.index(vendor_data["BusinessType"]),
+            index=BUSINESS_TYPES.index(vendor_data["DESCRIÇÃO"]),
         )
-        products = st.multiselect(
-            "Products Offered",
-            options=PRODUCTS,
-            default=vendor_data["Products"].split(", "),
+        CLASSIFICAÇÃO = st.multiselect(
+            "CLASSIFICAÇÃO Offered",
+            options=CLASSIFICAÇÃO,
+            default=vendor_data["CLASSIFICAÇÃO"].split(", "),
         )
         years_in_business = st.slider(
-            "Years in Business", 0, 50, int(vendor_data["YearsInBusiness"])
+            "Years in Business", 0, 50, int(vendor_data["JANEIRO"])
         )
         onboarding_date = st.date_input(
-            label="Onboarding Date", value=pd.to_datetime(vendor_data["OnboardingDate"])
+            label="Onboarding Date", value=pd.to_datetime(vendor_data["FEVEREIRO"])
         )
         additional_info = st.text_area(
-            label="Additional Notes", value=vendor_data["AdditionalInfo"]
+            label="Additional Notes", value=vendor_data["OBSERVAÇÃO"]
         )
 
         st.markdown("**required*")
@@ -119,7 +119,7 @@ elif action == "Editar Custo":
                 # Removing old entry
                 existing_data.drop(
                     existing_data[
-                        existing_data["CompanyName"] == vendor_to_update
+                        existing_data["UNIDADE"] == vendor_to_update
                     ].index,
                     inplace=True,
                 )
@@ -127,12 +127,12 @@ elif action == "Editar Custo":
                 updated_vendor_data = pd.DataFrame(
                     [
                         {
-                            "CompanyName": company_name,
-                            "BusinessType": business_type,
-                            "Products": ", ".join(products),
-                            "YearsInBusiness": years_in_business,
-                            "OnboardingDate": onboarding_date.strftime("%Y-%m-%d"),
-                            "AdditionalInfo": additional_info,
+                            "UNIDADE": company_name,
+                            "DESCRIÇÃO": business_type,
+                            "CLASSIFICAÇÃO": ", ".join(CLASSIFICAÇÃO),
+                            "JANEIRO": years_in_business,
+                            "FEVEREIRO": onboarding_date.strftime("%Y-%m-%d"),
+                            "OBSERVAÇÃO": additional_info,
                         }
                     ]
                 )
@@ -150,12 +150,12 @@ elif action == "Ver tabela de Custo":
 # Deletar Custo
 elif action == "Deletar Custo":
     vendor_to_delete = st.selectbox(
-        "Select a Vendor to Delete", options=existing_data["CompanyName"].tolist()
+        "Select a Vendor to Delete", options=existing_data["UNIDADE"].tolist()
     )
 
     if st.button("Delete"):
         existing_data.drop(
-            existing_data[existing_data["CompanyName"] == vendor_to_delete].index,
+            existing_data[existing_data["UNIDADE"] == vendor_to_delete].index,
             inplace=True,
         )
         conn.update(worksheet="Vendors", data=existing_data)
