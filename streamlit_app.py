@@ -111,15 +111,15 @@ if action == "Entrada de Custo":
 
 
 # ...
+# ...
+
 elif action == "Editar Custo":
     st.markdown("Selecione um custo e edite o que for necessário.")
 
     vendor_to_update = st.selectbox(
         "Selecione um custo para editar", options=existing_data["ID"].tolist()
     )
-    vendor_data = existing_data[existing_data["ID"] == vendor_to_update].iloc[
-        0
-    ]
+    vendor_data = existing_data[existing_data["ID"] == vendor_to_update].iloc[0]
 
     with st.form(key="update_form"):
         unidade = st.selectbox(
@@ -136,33 +136,19 @@ elif action == "Editar Custo":
             index=CLASSIFICACAO_QUAL.index(vendor_data["CLASSIFICAÇÃO"])
         )
 
-        # Convert the value to a string and handle cases where it's not present in the list
-        mes_value = str(vendor_data["MÊS"])
-        try:
-            meses = st.selectbox(
-                "Mês*",
-                options=MESES_DO_ANO,
-                index=MESES_DO_ANO.index(mes_value)
-            )
-        except ValueError:
-            meses = st.selectbox(
-                "Mês*",
-                options=MESES_DO_ANO,
-                index=None  # Default to None if the value is not found in the list
-            )
-
-        custo = st.text_input(
-            label="Custo*", value=vendor_data["CUSTO"]
-        )
+        # Check if "OBSERVAÇÃO" column is present in vendor_data
+        observacao_default = vendor_data.get("OBSERVAÇÃO", "")
         observacao = st.text_area(
-            label="Observação", value=vendor_data["OBSERVAÇÃO"]
+            label="Observação", value=observacao_default
         )
+
+        # ... (other input fields)
 
         st.markdown("**required*")
         update_button = st.form_submit_button(label="Atualizar entrada de custo")
 
         if update_button:
-            if not unidade or not descricao or not classificacao or not meses or not custo:
+            if not unidade or not descricao or not classificacao or not observacao:
                 st.warning("Preencha todos os campos obrigatórios.")
             else:
                 # Removing old entry
@@ -179,9 +165,8 @@ elif action == "Editar Custo":
                             "UNIDADE": unidade,
                             "DESCRIÇÃO": descricao,
                             "CLASSIFICAÇÃO": classificacao,
-                            "MÊS": meses,
-                            "CUSTO": custo,
                             "OBSERVAÇÃO": observacao,
+                            # ... (other columns)
                         }
                     ]
                 )
@@ -191,6 +176,7 @@ elif action == "Editar Custo":
                 )
                 conn.update(worksheet="Vendors", data=updated_df)
                 st.success("Vendor details successfully updated!")
+
 
 
 
