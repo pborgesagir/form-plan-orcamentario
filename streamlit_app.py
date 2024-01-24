@@ -6,13 +6,13 @@ import pandas as pd
 st.title("Formulário para Planejamento Orçamentário")
 
 # Constants
-BUSINESS_TYPES = [
+UNIDADE_QUAL = [
     "CRER",
     "HDS",
     "HECAD",
     "HUGOL",
 ]
-CLASSIFICACAO = [
+CLASSIFICACAO_QUAL = [
     "Água",
     "Central de gases",
     "Climatização artificial e aquecimento solar",
@@ -50,41 +50,63 @@ action = st.selectbox(
 )
 
 if action == "Entrada de Custo":
-    st.markdown("Enter the details of the new vendor below.")
+    st.markdown("Dê entrada de gastos que desejar.")
     with st.form(key="vendor_form"):
-        company_name = st.text_input(label="Company Name*")
-        business_type = st.selectbox(
-            "Business Type*", options=BUSINESS_TYPES, index=None
+        unidade = st.selectbox(
+            "Unidade*", options=UNIDADE_QUAL, index=None
         )
-        CLASSIFICAÇÃO = st.multiselect("CLASSIFICAÇÃO Offered", options=CLASSIFICAÇÃO)
-        years_in_business = st.slider("Years in Business", 0, 50, 5)
-        onboarding_date = st.date_input(label="Onboarding Date")
-        additional_info = st.text_area(label="Additional Notes")
+        descricao = text_input(label="Descrição*")
+        classificacao = st.selectbox(
+            "Classificação*", options=CLASSIFICACAO_QUAL, index=None
+        )
+        janeiro = st.text_input(label="Janeiro")
+        fevereiro = st.text_input(label="Fevereiro")
+        marco = st.text_input(label="Março")
+        abril = st.text_input(label="Abril")
+        maio = st.text_input(label="Maio")
+        junho = st.text_input(label="Junho")
+        julho = st.text_input(label="Julho")
+        agosto = st.text_input(label="Agosto")
+        setembro = st.text_input(label="Setembro")
+        outubro = st.text_input(label="Outubro")
+        novembro = st.text_input(label="Novembro")
+        dezembro = st.text_input(label="Dezembro")
+        observacao = st.text_area(label="Additional Notes")
 
-        st.markdown("**required*")
-        submit_button = st.form_submit_button(label="Submit Vendor Details")
+        st.markdown("**Campo obrigatório*")
+        submit_button = st.form_submit_button(label="Enviar Custo")
 
         if submit_button:
-            if not company_name or not business_type:
-                st.warning("Ensure all mandatory fields are filled.")
-            elif existing_data["UNIDADE"].str.contains(company_name).any():
-                st.warning("A vendor with this company name already exists.")
+            if not unidade or not descricao or not classificacao:
+                st.warning("Verifique se todos os campos obrigatórios foram preenchidos.")
+            elif existing_data["UNIDADE"].str.contains(unidade).any():
+                st.warning("Um custo com essa descrição para este mês já existe.")
             else:
                 vendor_data = pd.DataFrame(
                     [
                         {
-                            "UNIDADE": company_name,
-                            "DESCRIÇÃO": business_type,
-                            "CLASSIFICAÇÃO": ", ".join(CLASSIFICAÇÃO),
-                            "JANEIRO": years_in_business,
-                            "FEVEREIRO": onboarding_date.strftime("%Y-%m-%d"),
-                            "OBSERVAÇÃO": additional_info,
+                            "UNIDADE": unidade,
+                            "DESCRIÇÃO": descricao,
+                            "CLASSIFICAÇÃO": classificacao,
+                            "JANEIRO": "janeiro",
+                            "FEVEREIRO": "fevereiro",
+                            "MARÇO": "março",
+                            "ABRIL": "abril",
+                            "MAIO": "maio",
+                            "JUNHO": "junho",
+                            "JULHO": "julho",
+                            "AGOSTO": "agosto",
+                            "SETEMBRO": "setembro",
+                            "OUTUBRO": "outubro",
+                            "NOVEMBRO": "novembro",
+                            "DEZEMBRO": "dezembro",
+                            "OBSERVAÇÃO": observacao,
                         }
                     ]
                 )
                 updated_df = pd.concat([existing_data, vendor_data], ignore_index=True)
                 conn.update(worksheet="Vendors", data=updated_df)
-                st.success("Vendor details successfully submitted!")
+                st.success("Custo enviado com sucesso!")
 
 elif action == "Editar Custo":
     st.markdown("Select a vendor and update their details.")
@@ -97,13 +119,13 @@ elif action == "Editar Custo":
     ]
 
     with st.form(key="update_form"):
-        company_name = st.text_input(
+        unidade = st.text_input(
             label="Company Name*", value=vendor_data["UNIDADE"]
         )
-        business_type = st.selectbox(
+        descricao = st.selectbox(
             "Business Type*",
-            options=BUSINESS_TYPES,
-            index=BUSINESS_TYPES.index(vendor_data["DESCRIÇÃO"]),
+            options=UNIDADE_QUAL,
+            index=UNIDADE_QUAL.index(vendor_data["DESCRIÇÃO"]),
         )
         CLASSIFICAÇÃO = st.multiselect(
             "CLASSIFICAÇÃO Offered",
@@ -116,7 +138,7 @@ elif action == "Editar Custo":
         onboarding_date = st.date_input(
             label="Onboarding Date", value=pd.to_datetime(vendor_data["FEVEREIRO"])
         )
-        additional_info = st.text_area(
+        observacao = st.text_area(
             label="Additional Notes", value=vendor_data["OBSERVAÇÃO"]
         )
 
@@ -124,7 +146,7 @@ elif action == "Editar Custo":
         update_button = st.form_submit_button(label="Update Vendor Details")
 
         if update_button:
-            if not company_name or not business_type:
+            if not unidade or not descricao:
                 st.warning("Ensure all mandatory fields are filled.")
             else:
                 # Removing old entry
@@ -138,12 +160,12 @@ elif action == "Editar Custo":
                 updated_vendor_data = pd.DataFrame(
                     [
                         {
-                            "UNIDADE": company_name,
-                            "DESCRIÇÃO": business_type,
+                            "UNIDADE": unidade,
+                            "DESCRIÇÃO": descricao,
                             "CLASSIFICAÇÃO": ", ".join(CLASSIFICAÇÃO),
                             "JANEIRO": years_in_business,
                             "FEVEREIRO": onboarding_date.strftime("%Y-%m-%d"),
-                            "OBSERVAÇÃO": additional_info,
+                            "OBSERVAÇÃO": observacao,
                         }
                     ]
                 )
