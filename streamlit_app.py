@@ -31,14 +31,14 @@ existing_data = existing_data.dropna(how="all")
 action = st.selectbox(
     "Choose an Action",
     [
-        "Onboard New Vendor",
-        "Update Existing Vendor",
-        "View All Vendors",
+        "Entrada de Custo",
+        "Editar Custo",
+        "Ver tabela de Custo",
         "Delete Vendor",
     ],
 )
 
-if action == "Onboard New Vendor":
+if action == "Entrada de Custo":
     st.markdown("Enter the details of the new vendor below.")
     with st.form(key="vendor_form"):
         company_name = st.text_input(label="Company Name*")
@@ -75,7 +75,7 @@ if action == "Onboard New Vendor":
                 conn.update(worksheet="Vendors", data=updated_df)
                 st.success("Vendor details successfully submitted!")
 
-elif action == "Update Existing Vendor":
+elif action == "Editar Custo":
     st.markdown("Select a vendor and update their details.")
 
     vendor_to_update = st.selectbox(
@@ -143,8 +143,8 @@ elif action == "Update Existing Vendor":
                 conn.update(worksheet="Vendors", data=updated_df)
                 st.success("Vendor details successfully updated!")
 
-# View All Vendors
-elif action == "View All Vendors":
+# Ver tabela de Custo
+elif action == "Ver tabela de Custo":
     st.dataframe(existing_data)
 
 # Delete Vendor
