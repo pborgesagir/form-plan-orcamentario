@@ -136,11 +136,7 @@ elif action == "Editar Custo":
             index=CLASSIFICACAO_QUAL.index(vendor_data["CLASSIFICAÇÃO"])
         )
 
-        # Check if "OBSERVAÇÃO" column is present in vendor_data
-        observacao_default = vendor_data.get("OBSERVAÇÃO", "")
-        observacao = st.text_area(
-            label="Observação", value=observacao_default
-        )
+        
         meses = st.selectbox(
             "Mês*",
             options=MESES_DO_ANO,
@@ -148,6 +144,11 @@ elif action == "Editar Custo":
         )
         custo = st.text_input(
             label="Valor do Custo*", value=vendor_data["CUSTO"]
+        )
+        # Check if "OBSERVAÇÃO" column is present in vendor_data
+        observacao_default = vendor_data.get("OBSERVAÇÃO", "")
+        observacao = st.text_area(
+            label="Observação", value=observacao_default
         )
         
 
