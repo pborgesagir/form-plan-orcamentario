@@ -166,7 +166,8 @@ elif action == "Editar Custo":
                             "DESCRIÇÃO": descricao,
                             "CLASSIFICAÇÃO": classificacao,
                             "OBSERVAÇÃO": observacao,
-                            # ... (other columns)
+                            "CUSTO": custo,
+                            "OBSERVAÇÃO": observacao,
                         }
                     ]
                 )
