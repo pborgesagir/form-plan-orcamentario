@@ -55,7 +55,7 @@ MESES_DO_ANO = [
 conn = st.connection("gsheets", type=GSheetsConnection)
 
 # Fetch existing vendors data
-existing_data = conn.read(worksheet="Vendors", usecols=list(range(7)), ttl=6)
+existing_data = conn.read(worksheet="Respostas", usecols=list(range(7)), ttl=6)
 existing_data = existing_data.dropna(how="all")
 
 action = st.selectbox(
@@ -106,7 +106,7 @@ if action == "Entrada de Custo":
                     ]
                 )
                 updated_df = pd.concat([existing_data, vendor_data], ignore_index=True)
-                conn.update(worksheet="Vendors", data=updated_df)
+                conn.update(worksheet="Respostas", data=updated_df)
                 st.success("Custo enviado com sucesso!")
 
 
@@ -185,7 +185,7 @@ elif action == "Editar Custo":
                 updated_df = pd.concat(
                     [existing_data, updated_vendor_data], ignore_index=True
                 )
-                conn.update(worksheet="Vendors", data=updated_df)
+                conn.update(worksheet="Respostas", data=updated_df)
                 st.success("Vendor details successfully updated!")
 
 
@@ -206,6 +206,6 @@ elif action == "Deletar Custo":
             existing_data[existing_data["ID"] == vendor_to_delete].index,
             inplace=True,
         )
-        conn.update(worksheet="Vendors", data=existing_data)
+        conn.update(worksheet="Respostas", data=existing_data)
         st.success("Custo deletado com sucesso!")
 
