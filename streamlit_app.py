@@ -141,6 +141,15 @@ elif action == "Editar Custo":
         observacao = st.text_area(
             label="Observação", value=observacao_default
         )
+        meses = st.selectbox(
+            "Mês*",
+            options=MESES_DO_ANO,
+            index=MESES_DO_ANO.index(vendor_data["MÊS"])
+        )
+        custo = st.text_input(
+            label="Valor do Custo*", value=vendor_data["CUSTO"]
+        )
+        
 
         # ... (other input fields)
 
