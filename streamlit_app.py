@@ -175,7 +175,7 @@ elif action == "Editar Custo":
                             "UNIDADE": unidade,
                             "DESCRIÇÃO": descricao,
                             "CLASSIFICAÇÃO": classificacao,
-                            "OBSERVAÇÃO": observacao,
+                            "MÊS": meses,
                             "CUSTO": custo,
                             "OBSERVAÇÃO": observacao,
                         }
