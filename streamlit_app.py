@@ -81,6 +81,9 @@ if action == "Entrada de Custo":
         unidade = st.selectbox(
             "Unidade*", options=UNIDADE_QUAL, index=None
         )
+         execucao = st.selectbox(
+            "Execução orçamentária*", options=EXECUCAO_QUAL, index=None
+        )
         descricao = text_input(label="Descrição*")
         classificacao = st.selectbox(
             "Classificação*", options=CLASSIFICACAO_QUAL, index=None
@@ -107,6 +110,7 @@ if action == "Entrada de Custo":
                     [
                         {
                             "UNIDADE": unidade,
+                            "EXECUÇÃO ORCAMENTÁRIA": execucao,
                             "DESCRIÇÃO": descricao,
                             "CLASSIFICAÇÃO": classificacao,
                             "MÊS": meses,
@@ -136,6 +140,11 @@ elif action == "Editar Custo":
             "Unidade*",
             options=UNIDADE_QUAL,
             index=UNIDADE_QUAL.index(vendor_data["UNIDADE"])
+        )
+         execucao = st.selectbox(
+            "Execução orçamentária*",
+            options=EXECUCAO_QUAL,
+            index=EXECUCAO_QUAL.index(vendor_data["EXECUÇÃO ORÇAMENTÁRIA"])
         )
         descricao = st.text_input(
             label="Descrição*", value=vendor_data["DESCRIÇÃO"]
@@ -183,6 +192,7 @@ elif action == "Editar Custo":
                     [
                         {
                             "UNIDADE": unidade,
+                            "EXECUÇÃO ORÇAMENTÁRIA": execucao,
                             "DESCRIÇÃO": descricao,
                             "CLASSIFICAÇÃO": classificacao,
                             "MÊS": meses,
