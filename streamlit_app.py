@@ -5,12 +5,10 @@ from streamlit import text_input
 
 
 
-st.set_page_config(
-    page_title='Formulário para Planejamento Orçamentário',
-    page_icon='📝'  
-)
+
 # Display Title and Description
 st.title("Formulário para Planejamento Orçamentário")
+st.page_icon='🏗️'
 
 # Constants
 UNIDADE_QUAL = [
