@@ -90,8 +90,11 @@ if action == "Entrada de Custo":
         if submit_button:
             if not unidade or not descricao or not classificacao or not meses or not custo:
                 st.warning("Verifique se todos os campos obrigatórios foram preenchidos.")
-            elif existing_data["UNIDADE"].astype(str).str.contains(unidade).any():
+            elif ((existing_data["UNIDADE"].astype(str) == unidade) & 
+                (existing_data["DESCRIÇÃO"].astype(str) == descricao) & 
+                (existing_data["MÊS"].astype(str) == meses)).any():
                 st.warning("Um custo com essa descrição para este mês já existe.")
+
             else:
                 vendor_data = pd.DataFrame(
                     [
