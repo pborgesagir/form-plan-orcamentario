@@ -111,7 +111,7 @@ if action == "Entrada de Custo":
                     [
                         {
                             "UNIDADE": unidade,
-                            "EXECUÇÃO ORCAMENTÁRIA": execucao,
+                            "EXECUÇÃO ORÇAMENTÁRIA": execucao,
                             "DESCRIÇÃO": descricao,
                             "CLASSIFICAÇÃO": classificacao,
                             "MÊS": meses,
