@@ -4,6 +4,12 @@ import pandas as pd
 from streamlit import text_input
 
 
+
+st.set_page_config(
+    page_title='Formulário para Planejamento Orçamentário',
+    layout='wide',
+    page_icon='📝'  
+)
 # Display Title and Description
 st.title("Formulário para Planejamento Orçamentário")
 
