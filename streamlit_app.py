@@ -14,6 +14,13 @@ UNIDADE_QUAL = [
     "HECAD",
     "HUGOL",
 ]
+
+
+EXECUCAO_QUAL = [
+    "PLANEJADA",
+    "EXECUTADA",
+]
+
 CLASSIFICACAO_QUAL = [
     "Água",
     "Central de gases",
