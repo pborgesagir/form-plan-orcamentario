@@ -62,7 +62,7 @@ MESES_DO_ANO = [
 conn = st.connection("gsheets", type=GSheetsConnection)
 
 # Fetch existing vendors data
-existing_data = conn.read(worksheet="Respostas", usecols=list(range(7)), ttl=6)
+existing_data = conn.read(worksheet="Respostas", usecols=list(range(8)), ttl=7)
 existing_data = existing_data.dropna(how="all")
 
 action = st.selectbox(
