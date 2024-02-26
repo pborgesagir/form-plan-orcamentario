@@ -8,7 +8,7 @@ from streamlit import text_input
 
 # Display Title and Description
 st.title("Formulário para Planejamento Orçamentário")
-st.page_icon='🏗️'
+
 
 # Constants
 UNIDADE_QUAL = [
