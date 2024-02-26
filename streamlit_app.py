@@ -102,7 +102,7 @@ if action == "Entrada de Custo":
                 st.warning("Verifique se todos os campos obrigatórios foram preenchidos.")
             elif ((existing_data["UNIDADE"].astype(str) == unidade) & 
                 (existing_data["DESCRIÇÃO"].astype(str) == descricao) & 
-                (existing_data["EXECUÇÃO ORÇAMENTÁRIA"].astype(str) == execucao)  
+                (existing_data["EXECUÇÃO ORÇAMENTÁRIA"].astype(str) == execucao) &
                 (existing_data["MÊS"].astype(str) == meses)).any():
                 st.warning("Um custo com essa descrição para este mês já existe.")
 
