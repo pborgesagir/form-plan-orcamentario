@@ -141,7 +141,7 @@ elif action == "Editar Custo":
             options=UNIDADE_QUAL,
             index=UNIDADE_QUAL.index(vendor_data["UNIDADE"])
         )
-         execucao = st.selectbox(
+        execucao = st.selectbox(
             "Execução orçamentária*",
             options=EXECUCAO_QUAL,
             index=EXECUCAO_QUAL.index(vendor_data["EXECUÇÃO ORÇAMENTÁRIA"])
