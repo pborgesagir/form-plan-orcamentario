@@ -81,7 +81,7 @@ if action == "Entrada de Custo":
         unidade = st.selectbox(
             "Unidade*", options=UNIDADE_QUAL, index=None
         )
-         execucao = st.selectbox(
+        execucao = st.selectbox(
             "Execução orçamentária*", options=EXECUCAO_QUAL, index=None
         )
         descricao = text_input(label="Descrição*")
