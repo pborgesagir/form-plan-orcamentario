@@ -12,7 +12,7 @@ st.set_page_config(
 )
 
 # Display Title and Description
-st.title("Formulário para Planejamento Orçamentário")
+st.title("Formulário de Planejamento e Execução Orçamentária")
 
 
 
