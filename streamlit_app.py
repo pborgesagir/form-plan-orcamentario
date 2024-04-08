@@ -2,6 +2,7 @@ import streamlit as st
 from streamlit_gsheets import GSheetsConnection
 import pandas as pd
 from streamlit import text_input
+import time 
 
 
 
@@ -131,6 +132,7 @@ if action == "Entrada de Custo":
                 )
                 updated_df = pd.concat([existing_data, vendor_data], ignore_index=True)
                 conn.update(worksheet="Respostas", data=updated_df)
+                time.sleep(2)
                 st.success("Custo enviado com sucesso!")
 
 
