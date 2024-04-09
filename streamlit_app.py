@@ -47,6 +47,7 @@ CLASSIFICACAO_QUAL = [
     "Manutenção pontual fora orçamento",
     "Manutenções diversas",
     "Nobreaks",
+    "Obra de contratação direta",
     "Outros",
 ]
 MESES_DO_ANO = [
