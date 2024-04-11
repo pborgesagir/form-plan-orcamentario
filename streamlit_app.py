@@ -32,14 +32,12 @@ EXECUCAO_QUAL = [
 ]
 
 CLASSIFICACAO_QUAL = [
-    "Água",
     "Central de gases",
     "Climatização artificial e aquecimento solar",
     "Contrato engenharia clínica",
     "Contrato manutenção predial",
     "Contrato projetos",
     "Elevadores",
-    "Energia elétrica",
     "Grupo gerador",
     "Inspeções e qualificações",
     "Locação de equipamentos",
