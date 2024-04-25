@@ -107,6 +107,7 @@ if action == "Entrada de Custo":
         submit_button = st.form_submit_button(label="Enviar Custo")
 
         if submit_button:
+            time.sleep(2)
             if not unidade or not descricao or not classificacao or not meses or not custo:
                 st.warning("Verifique se todos os campos obrigatórios foram preenchidos.")
             elif ((existing_data["UNIDADE"].astype(str) == unidade) & 
