@@ -217,7 +217,7 @@ elif action == "Editar Custo":
                     [existing_data, updated_vendor_data], ignore_index=True
                 )
                 conn.update(worksheet="Respostas", data=updated_df)
-                st.success("Vendor details successfully updated!")
+                st.success("Atualizado com sucesso!")
 
 
 
